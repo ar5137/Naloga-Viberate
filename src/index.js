@@ -1,17 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom";
+import useFetch from "./useFetch";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const Home = () => {
+  const [data] = useFetch("https://run.mocky.io/v3/3cab6663-7cd8-4365-b8a6-4a1d89305f6a");
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  return (
+    <>
+      {data.map(name => <h2>{name}</h2>)} 
+    </>
+  );
+};
+
+ReactDOM.render(<Home />, document.getElementById("seznam"));
