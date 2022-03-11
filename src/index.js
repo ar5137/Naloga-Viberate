@@ -4,6 +4,7 @@ import React from 'react';
 
 import PersonList from './components/PersonList.js';
 import AllDetails from './components/ArtistDetails.js';
+import { BrowserRouter } from "react-router-dom";
 
 
 function App() {
@@ -18,7 +19,7 @@ function Details(){
 }
 
 
-ReactDOM.render(<App />, document.getElementById("arti"));
-ReactDOM.render(<Details />, document.getElementById("title"));
+ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById("arti"));
+ReactDOM.render(<BrowserRouter><Details /></BrowserRouter>, document.getElementById("title"));
 
 //key={item.id}

@@ -1,47 +1,26 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import {BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
+import { ResponsiveBar } from '@nivo/bar'
 
 
-function ParamsExample() {
-    return (
-      <Router>
-        <div>
-          <h2>Accounts</h2>
-  
-          <ul>
-            <li>
-              <Link to="/netflix">Netflix</Link>
-            </li>
-            <li>
-              <Link to="/zillow-group">Zillow Group</Link>
-            </li>
-            <li>
-              <Link to="/yahoo">Yahoo</Link>
-            </li>
-            <li>
-              <Link to="/modus-create">Modus Create</Link>
-            </li>
-          </ul>
-  
-          
-        </div>
-      </Router>
-    );
-  }
+
 
 
 export default function AllDetails() {
     let [artistComponentState, setArtistComponentState] = useState({data: {}, loading:true});
     
-        
+    
             
-    const id = '7c46c4ce-09c0-4f95-b4e1-84ae10bd24ab'
+    const id = '563d07d4-1ff7-45b4-85cc-9c9bed8ac9f2'
     const url = 'https://run.mocky.io/v3/'+id;
     let { id1 } = useParams(); 
 
   
-    
+
+	
+
+	  
 
     useEffect(() => {
         axios.get(url).then((res) => {
@@ -50,15 +29,10 @@ export default function AllDetails() {
             
         })
     },[]);
-         console.log();
+        // console.log();
 
-        //<img src={artistData.image} alt={artistData.slug} />
-        /*
-        <figcaption style={{backgroundImage:`url(${artistData.data.image})`}}>
-                        
-                        <button className="btn btn-claim-music-id">Claim music_id</button>
-                    </figcaption>
-        */
+		 
+        
 
     if(artistComponentState.loading){
         return <>IT IS LAODING !!</>
@@ -88,11 +62,7 @@ export default function AllDetails() {
 											<button className="btn btn-solid border btn-booking-request">Booking Request</button>
 											<h1 className="title">
                                             {artistComponentState.data.name}
-                                            <div>
-                                            <h3>ID: {id1}</h3>
-                                            </div>
-
-                                                
+                                                                                            
 												<div className="tooltip-wrapper">
 													<span className="profile-claimed">Profile claimed</span>
 													<div className="tooltip">
@@ -177,7 +147,7 @@ export default function AllDetails() {
                                             {artistComponentState.data.social_links &&
                                                 artistComponentState.data.social_links.map((item) => {
                                                 return <li key={item.channel}>
-                                                    <a href={item.link} className={`btn social-icon ${item.channel}`}></a>
+                                                    <a href={item.link} target="_blank" className={`btn social-icon ${item.channel}`}></a>
                                                 </li>;
                                             })}
 											
@@ -207,36 +177,38 @@ export default function AllDetails() {
 									<div className="stats-sheet">
 										<label>Most popular in</label>
                                         
-										<div className="row">
-											<h5>Ljubljana</h5>
-											<div className="graph-line">
-												<span className="line" style={{width: "47%"}}>47%</span>
+											<div className="stats-sheet" style={{ height: "350px" }}>
+											<ResponsiveBar
+											data={artistComponentState.data.popularity}
+											keys={["percentage"]}
+											indexBy="city"
+											layout="horizontal"
+											margin={{ top: 50, right: 13, bottom: 50, left: 70 }}
+											maxValue = {10}
+											padding={0.75}
+											valueScale={{ type: "linear" }}
+											colors="black"
+											borderColor="white"
+											animate={true}
+											enableLabel={false}
+											enableGridY = {false}
+											axisTop={null}
+											axisBottom = {null}
+											axisRight={null}
+										
+											axisLeft={{
+											tickSize: 0,
+											tickPadding: 5,
+											tickRotation: 0,
+											//legend: "degrees",
+											legendPosition: "middle",
+											legendOffset: -40,
+											
+											
+											}}
+										/>
+
 											</div>
-										</div>
-										<div className="row">
-											<h5>Maribor</h5>
-											<div className="graph-line">
-												<span className="line" style={{width: "23%"}}>23%</span>
-											</div>
-										</div>
-										<div className="row">
-											<h5>Celje</h5>
-											<div className="graph-line">
-												<span className="line" style={{width: "15%"}}>15%</span>
-											</div>
-										</div>
-										<div className="row">
-											<h5>Postojna</h5>
-											<div className="graph-line">
-												<span className="line" style={{width: "11%"}}>11%</span>
-											</div>
-										</div>
-										<div className="row">
-											<h5>Koper</h5>
-											<div className="graph-line">
-												<span className="line" style={{width: "9%"}}>9%</span>
-											</div>
-										</div>
 									</div>
 
 								</div>
