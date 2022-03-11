@@ -1,32 +1,255 @@
-import React, { useEffect, useState, memo} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
+import {BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
 
+
+function ParamsExample() {
+    return (
+      <Router>
+        <div>
+          <h2>Accounts</h2>
+  
+          <ul>
+            <li>
+              <Link to="/netflix">Netflix</Link>
+            </li>
+            <li>
+              <Link to="/zillow-group">Zillow Group</Link>
+            </li>
+            <li>
+              <Link to="/yahoo">Yahoo</Link>
+            </li>
+            <li>
+              <Link to="/modus-create">Modus Create</Link>
+            </li>
+          </ul>
+  
+          
+        </div>
+      </Router>
+    );
+  }
 
 
 export default function AllDetails() {
+    let [artistComponentState, setArtistComponentState] = useState({data: {}, loading:true});
     
-        const [artistData, setArtistData] = useState({});
+        
             
-        const id = '7c46c4ce-09c0-4f95-b4e1-84ae10bd24ab'
-        const url = 'https://run.mocky.io/v3/'+id;
-   
+    const id = '7c46c4ce-09c0-4f95-b4e1-84ae10bd24ab'
+    const url = 'https://run.mocky.io/v3/'+id;
+    let { id1 } = useParams(); 
 
-      
-        
+  
+    
 
-        useEffect(() => {
-            axios.get(url).then((res) => {
-                setArtistData(res.data.data);
-                
-            })
-        },[]);
+    useEffect(() => {
+        axios.get(url).then((res) => {
+            setArtistComponentState({data: res.data.data, loading:false});
+            
+            
+        })
+    },[]);
+         console.log();
 
-        //console.log(artistData.name); 
-        
+        //<img src={artistData.image} alt={artistData.slug} />
+        /*
+        <figcaption style={{backgroundImage:`url(${artistData.data.image})`}}>
+                        
+                        <button className="btn btn-claim-music-id">Claim music_id</button>
+                    </figcaption>
+        */
 
+    if(artistComponentState.loading){
+        return <>IT IS LAODING !!</>
+    }
+    
      return(
         <>
-            {artistData.name}
+            <div className="col visual">
+                <figure>
+                    
+                        <img src={artistComponentState.data.image} alt={artistComponentState.data.slug} />
+                        <button className="btn btn-claim-music-id">Claim music_id</button>
+                    
+                </figure>			
+            </div>
+					
+
+						<div className="col-wrapper" >
+						
+							<div className="col info"  >
+
+								<div className="col-content" >
+								
+									<div className="info-wrapper" >
+
+										<div className="title-wrapper" >
+											<button className="btn btn-solid border btn-booking-request">Booking Request</button>
+											<h1 className="title">
+                                            {artistComponentState.data.name}
+                                            <div>
+                                            <h3>ID: {id1}</h3>
+                                            </div>
+
+                                                
+												<div className="tooltip-wrapper">
+													<span className="profile-claimed">Profile claimed</span>
+													<div className="tooltip">
+														<h3>Vote for subgenres</h3>
+														<p>Don’t agree with the subgenres? Add the ones you think are missing or vote for existing to get yours on top!</p>
+														<div className="stats-sheet">
+                                                            {artistComponentState.data.subgenres &&
+                                                                artistComponentState.data.subgenres.map((item) => {
+                                                                return <div className="row">
+                                                                        <h5>{item.name}</h5>
+                                                                        <div className="graph-line">
+                                                                            <span className="line" style={{width: item.vote_percentage}}>{item.vote_percentage}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                ;
+                                                            })}
+															
+														</div>
+														<p>
+															<button className="btn btn-shadow">Vote now</button>
+														</p>
+													</div>
+												</div>
+												
+												<span className="trending-icon">Trending</span>
+											</h1>
+										</div>
+
+										<div className="row">
+											<button className="btn btn-save long">Follow</button>
+											<button className="btn btn-share">
+												Share
+												<span>Link copied to clipboard</span>
+											</button>
+										</div>
+
+										<div className="row">
+											<label>Origin</label>
+											<a className="btn btn-filter-tag">{artistComponentState.data.country.name}</a>
+										</div>
+
+										<div className="row">
+											<label>Genre</label>
+											<span className="btn btn-filter-tag">{artistComponentState.data.genre.name}</span>
+										</div>
+
+										<div className="row">
+											<label>Subgenres</label>
+                                            {artistComponentState.data.subgenres &&
+                                                artistComponentState.data.subgenres.map((item) => {
+                                                return <span key={item.id} className="btn btn-filter-tag">{item.name}</span>;
+                                            })}
+											
+											<div className="tooltip-wrapper">
+												<button className="btn btn-add">Add subgenre</button>
+												<div className="tooltip">
+													<h3>Vote for subgenres</h3>
+													<p>Don’t agree with the subgenres? Add the ones you think are missing or vote for existing to get yours on top!</p>
+													<div className="stats-sheet">
+                                                    {artistComponentState.data.subgenres &&
+                                                        artistComponentState.data.subgenres.map((item) => {
+                                                        return <span  key={item.id} className="btn btn-shadow" style={{borderColor:"white", color:"grey"}}>{item.name}</span>;
+                                                    })}
+                                                    <form>
+                                                        <label>Enter your subgenre:
+                                                            <input type="text" style={{color:"white" , borderColor: "white"}} />
+                                                        </label>
+                                                        </form>
+													</div>
+													<p>
+														<button className="btn btn-shadow">Vote now</button>
+													</p>
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div className="footer-detail">
+										
+										<ul className="social-list">
+                                            {artistComponentState.data.social_links &&
+                                                artistComponentState.data.social_links.map((item) => {
+                                                return <li key={item.channel}>
+                                                    <a href={item.link} className={`btn social-icon ${item.channel}`}></a>
+                                                </li>;
+                                            })}
+											
+										</ul>
+
+										<div className="tooltip-wrapper">
+												<button className="btn btn-add">Add links</button>
+												<div className="tooltip">
+													<h3>Got more info?</h3>
+													<p>Add Place's links so everyone can see their social media highlights.</p>
+													<p>
+														<button className="btn btn-shadow">Add links</button>
+													</p>
+												</div>
+											</div>
+
+									</div>
+
+								</div>
+
+							</div>
+				
+							<div className="col stats">
+
+								<div className="col-content">
+
+									<div className="stats-sheet">
+										<label>Most popular in</label>
+                                        
+										<div className="row">
+											<h5>Ljubljana</h5>
+											<div className="graph-line">
+												<span className="line" style={{width: "47%"}}>47%</span>
+											</div>
+										</div>
+										<div className="row">
+											<h5>Maribor</h5>
+											<div className="graph-line">
+												<span className="line" style={{width: "23%"}}>23%</span>
+											</div>
+										</div>
+										<div className="row">
+											<h5>Celje</h5>
+											<div className="graph-line">
+												<span className="line" style={{width: "15%"}}>15%</span>
+											</div>
+										</div>
+										<div className="row">
+											<h5>Postojna</h5>
+											<div className="graph-line">
+												<span className="line" style={{width: "11%"}}>11%</span>
+											</div>
+										</div>
+										<div className="row">
+											<h5>Koper</h5>
+											<div className="graph-line">
+												<span className="line" style={{width: "9%"}}>9%</span>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+							
+
+						</div>
+
+						<button className="btn btn-scroll-down">Scroll down</button>
+
+					
+                    
         </>
      )
  
