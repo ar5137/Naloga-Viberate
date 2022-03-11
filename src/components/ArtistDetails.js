@@ -12,10 +12,11 @@ export default function AllDetails() {
     
     
             
-    const id = '563d07d4-1ff7-45b4-85cc-9c9bed8ac9f2'
-    const url = 'https://run.mocky.io/v3/'+id;
-    let { id1 } = useParams(); 
-
+     let {id} = useParams();
+	
+    const url = 'https://run.mocky.io/v3/7c46c4ce-09c0-4f95-b4e1-84ae10bd24ab';
+     
+	console.log({id});
   
 
 	
@@ -29,7 +30,7 @@ export default function AllDetails() {
             
         })
     },[]);
-        // console.log();
+        // 
 
 		 
         

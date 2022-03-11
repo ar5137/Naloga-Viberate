@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { HashRouter, NavLink } from 'react-router-dom';
 
 export default function PersonList(){
     let [artistComponentState1, setArtistComponentState1] = useState({data: {}, loading:true});
@@ -25,10 +26,11 @@ export default function PersonList(){
       <ul className="menu">
         {
           artistComponentState1.data.map(person =>
-              <li key={person.artist_uuid}><a href="/">{person.artist_name}</a></li>
+              <li key={person.artist_uuid}><NavLink to={'id/'+person.artist_uuid}>{person.artist_name}</NavLink></li>
             )
         }
       </ul>
+      
     )
 
 }
