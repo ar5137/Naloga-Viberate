@@ -1,17 +1,11 @@
 import ReactDOM from "react-dom";
 import React from 'react';
+import { BrowserRouter, HashRouter, Link, Route, Router, Routes, Switch } from "react-router-dom";
 
 
 import PersonList from './components/PersonList.js';
 import AllDetails from './components/ArtistDetails.js';
-import { BrowserRouter } from "react-router-dom";
 
-
-function App() {
-  return ( 
-    <PersonList/>  
-  )
-}
 function Details(){
   return(
     <AllDetails/>
@@ -19,7 +13,7 @@ function Details(){
 }
 
 
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById("arti"));
-ReactDOM.render(<BrowserRouter><Details /></BrowserRouter>, document.getElementById("title"));
+ReactDOM.render(<PersonList/>, document.getElementById("title"));
+//ReactDOM.render(<Details />, document.getElementById("title"));
 
 //key={item.id}

@@ -1,44 +1,86 @@
+import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
+import AllDetails from './ArtistDetails';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { HashRouter, NavLink } from 'react-router-dom';
+
 
 export default function PersonList(){
-    let [artistComponentState1, setArtistComponentState1] = useState({data: {}, loading:true});
+  let [artistComponentState1, setArtistComponentState1] = useState({data: {}, loading:true});
     
 
-    useEffect(() => {
-        axios.get('https://run.mocky.io/v3/3cab6663-7cd8-4365-b8a6-4a1d89305f6a').then((res) => {
-            setArtistComponentState1({data: res.data.all_artists, loading:false});    
-          })
-        },[]);
+  useEffect(() => {
+      axios.get('https://run.mocky.io/v3/3cab6663-7cd8-4365-b8a6-4a1d89305f6a').then((res) => {
+          setArtistComponentState1({data: res.data.all_artists, loading:false});    
+        })
+      },['https://run.mocky.io/v3/3cab6663-7cd8-4365-b8a6-4a1d89305f6a']);
 
-         //console.log(artistComponentState1);
+     
+   
+      
 
-		 
-        
-
-    if(artistComponentState1.loading){
-        return <>IT IS LAODING !!</>
-    }
+  if(artistComponentState1.loading){
+      return <>IT IS LAODING !!</>
+  }
 
     return (
-       
-      <ul className="menu">
-        {
+      
+      <Router>
+        <div className='container'>
+        <header className='header'>
+
+        <div className='page'>
+          
+          <a href="#" className='logo'>
+          <img src="./exercise-01_files/logo-v.svg" alt="Viberate" /> Viberate
+          </a>
+
+          <nav className='navigation-primary'>
+
+            <ul className='menu-sys'>
+              <li>
+                <button className='btn btn-menu search'>Search</button>
+              </li>
+              <li>
+                <button className='btn btn-menu more'>More</button>
+              </li>
+              
+            </ul>
+            
+            <ul className='menu' >
+            {
           artistComponentState1.data.map(person =>
-              <li key={person.artist_uuid}><NavLink to={'id/'+person.artist_uuid}>{person.artist_name}</NavLink></li>
+            //<li key={person.artist_uuid}>{person.artist_name}</li>
+              <li key={person.artist_uuid}><Link to={`${person.artist_uuid}`}>{person.artist_name}</Link></li>
             )
         }
-      </ul>
-      
-    )
+            </ul>
+
+          </nav>
+        
+        </div>
+
+
+        </header>
+
+        
+        
+        </div>
+            <Routes>
+                <Route path=":artistId" element={<AllDetails />}></Route>
+            </Routes>
+        
+
+    </Router>
+    );
 
 }
 
-/*
+/*<Routes>
+          <Route path="" element={<AllDetails />} />
+        </Routes>
 
 
-
+</Router> 
 
 
 

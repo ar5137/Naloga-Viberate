@@ -1,7 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
-import {BrowserRouter as Router, Switch, Route, Link, useParams} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link, useSearchParams} from "react-router-dom";
 import { ResponsiveBar } from '@nivo/bar'
+import {useParams} from "react-router-dom";
 
 
 
@@ -12,11 +13,14 @@ export default function AllDetails() {
     
     
             
-     let {id} = useParams();
+     let {artistId} = useParams();
+	 
 	
-    const url = 'https://run.mocky.io/v3/7c46c4ce-09c0-4f95-b4e1-84ae10bd24ab';
+    const url = 'https://run.mocky.io/v3/';
+	const artistID = artistId;
+	const fullUrl = url+artistID;
      
-	console.log({id});
+	console.log(artistID);
   
 
 	
@@ -24,12 +28,12 @@ export default function AllDetails() {
 	  
 
     useEffect(() => {
-        axios.get(url).then((res) => {
+        axios.get(fullUrl).then((res) => {
             setArtistComponentState({data: res.data.data, loading:false});
             
             
         })
-    },[]);
+    },[fullUrl]);
         // 
 
 		 
@@ -41,7 +45,10 @@ export default function AllDetails() {
     
      return(
         <>
-            <div className="col visual">
+		<main className='main'>
+		<section className='section section-artist-detail trending claimed'>
+		<div className='page'  >
+            <div className='col visual'>
                 <figure>
                     
                         <img src={artistComponentState.data.image} alt={artistComponentState.data.slug} />
@@ -222,7 +229,9 @@ export default function AllDetails() {
 						<button className="btn btn-scroll-down">Scroll down</button>
 
 					
-                    
+                  </div>
+				  </section>
+				  </main>  
         </>
      )
  
